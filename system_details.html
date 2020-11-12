@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PVP Calculator</title>
+
+        <!-- Normalize.css makes browsers render all elements more consistently 
+             and in line with modern standards. It precisely targets only the styles
+             that need normalizing -->
+        <link rel="stylesheet" type="text/css" href="assets/stylesheets/normalize.css">
+
+        <!-- Custom Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="assets/stylesheets/styles.css">
+
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+        <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js'></script>
+
+
+
+    </head>
+
+    <body>
+       <!-- Navigation -->
+       <nav class="top-nav fixed">
+            <ul>
+                <li>
+                    <a href="index.html">Start</a>
+                </li>
+                <li>
+                    <a  class="active" href="system_details.html">System Details</a>
+                </li>
+                <li>
+                    <a href="calculations.html">Calculations</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <center> 
+                <div class="container"> 
+                    <div id="left-box"> 
+                        <h3 class="sign">Enter system data:</h3>
+                        
+                        <form class="form_system_details">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>DC System Size (kW):</th>
+                                        <td><input type = "number" name = "dc_system_size" min=0 step=0.05 placeholder="3.00"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>System Efficiency (%):</th>
+                                        <td><input type = "number" name ="system_efficiency" step=0.05 placeholder="12.5"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tilt (deg):</th>
+                                        <td><input type = "number" name = "tilt" min=0 step=0.01 placeholder="15.03"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Azimuth (deg):</th>
+                                        <td><input type = "number" name = "azimuth" step=0.01 min=-180 max=180 placeholder="47.20"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Rate ($/kWh):</th>
+                                        <td><input type = "number" name = "rate" min=0 step=0.01 placeholder="0.06"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <a href="calculations.html" class="submit">Calculate</a>
+                        </form>
+                    </div> 
+                    
+                    <div id="right-box"> 
+                        <div id="map"></div>
+                        <script type="text/javascript">
+                            var latitude = localStorage.getItem("latitude");
+                            var longitude = localStorage.getItem("longitude");
+                            
+                            var map = L.map('map').setView([latitude, longitude], 13);
+
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            }).addTo(map);
+
+                            L.marker([latitude, longitude]).addTo(map)
+                                .bindPopup(latitude + ', ' + longitude)
+                                .openPopup();
+                            
+                        </script>
+                    </div> 
+                </div> 
+            </center> 
+        </main>
+    
+        <!-- Footer Section -->
+        <footer>
+            <p>Photovoltaic Potential Calculator - Velibor Cvjetinovic</p>
+        </footer>
+
+        <script src="assets/javascript/main.js"></script>
+    </body>
+</html>
