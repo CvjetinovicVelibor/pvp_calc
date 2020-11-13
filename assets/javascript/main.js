@@ -1,8 +1,18 @@
-var latitude;
-var longitude;
-var dcSystemSize;
 
 
+
+
+class SystemData {
+  constructor(latitude, longitude, dc, efficiency, tilt, azimuth, rate) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.dc = dc;
+    this.efficiency = efficiency;
+    this.tilt = tilt;
+    this.azimuth = azimuth;
+    this.rate = rate;
+  }
+}
 
 
 
@@ -36,31 +46,31 @@ function loadCoordinates() {
 ///////////////////////////// AJAX /////////////////////////////////////////
 
 function getData(){
-  var url = "https://reqres.in/api/users";
-  fetch(url).then(response => {
-    if(!response.ok){
-      throw Error("Error occured while fetching data from "+url);
-    }
-  
-    return response.json();
-  })
-  .then(data => {
-    console.log(data.data);
-    const html = data.data.map(user => {
-      return `
-        <div class="user" onclick="selectProfile('${user.first_name}', '${user.email}', '${user.avatar}')">  
-          <p>${user.first_name}</p>
-          <p>${user.email}</p>
-          <p><img src="${user.avatar}" alt="Foto ${user.first_name}" /></p>
-        </div>
-      `;
-    }).join("");
+    var url = "https://reqres.in/api/users";
+    fetch(url).then(response => {
+      if(!response.ok){
+        throw Error("Error occured while fetching data from "+url);
+      }
+    
+      return response.json();
+    })
+    .then(data => {
+      console.log(data.data);
+      const html = data.data.map(user => {
+        return `
+          <div class="user" onclick="selectProfile('${user.first_name}', '${user.email}', '${user.avatar}')">  
+            <p>${user.first_name}</p>
+            <p>${user.email}</p>
+            <p><img src="${user.avatar}" alt="Foto ${user.first_name}" /></p>
+          </div>
+        `;
+      }).join("");
 
-    document.querySelector("#data_table").insertAdjacentHTML("afterbegin", html);
-  })
-  .catch(error => {
-    console.log(error);
-  });
+      document.querySelector("#data_table").insertAdjacentHTML("afterbegin", html);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 
 
 }
@@ -97,13 +107,28 @@ function postData(url, object){
 
 }
 
-function calculationsRequest(dc, efficiency){
+function createResultsRequest(systemData){
   url = "localhost:8080/example?";
-  if(dc != null && dc != ""){
-    url = url + "dc="+ dc + "&";
+  if(systemData.latitude != null && systemData.latitude != ""){
+    url = url + "latitude="+ systemData.latitude + "&";
   }
-  if(efficiency != null && efficiency != ""){
-    url = url + "efficiency="+ efficiency + "&";
+  if(systemData.longitude != null && systemData.longitude != ""){
+    url = url + "longitude="+ systemData.longitude + "&";
+  }
+  if(systemData.dc != null && systemData.dc != ""){
+    url = url + "dc="+ systemData.dc + "&";
+  }
+  if(systemData.efficiency != null && systemData.efficiency != ""){
+    url = url + "efficiency="+ systemData.efficiency + "&";
+  }
+  if(systemData.tilt != null && systemData.tilt != ""){
+    url = url + "tilt="+ systemData.tilt + "&";
+  }
+  if(systemData.azimuth != null && systemData.azimuth != ""){
+    url = url + "azimuth="+ systemData.azimuth + "&";
+  }
+  if(systemData.rate != null && systemData.rate != ""){
+    url = url + "rate="+ systemData.rate + "&";
   }
   console.log("Created request: "+url);
   return url;
@@ -137,6 +162,7 @@ function selectProfile(first_name, email, avatar){
   document.getElementById("selected_profiles").appendChild(div);
 }
 
+// Remove profile
 function removeProfile(first_name){
   var profile = document.getElementById(first_name);
   document.getElementById("selected_profiles").removeChild(profile);
@@ -210,6 +236,8 @@ function validateform(){
   }
 }  
 
+
+////////////////////// Page Initialization /////////////////////////
 function updateDisplayName(){ 
   document.getElementById("displayName").innerHTML = " "+sessionStorage.getItem("username");
   //document.getElementById("displayName").innerHTML = " "+window.name;
@@ -223,21 +251,25 @@ function loadDisplayName(){
 }
 
 
-class SystemData {
-  constructor(dc, efficiency) {
-    this.dc = dc;
-    this.efficiency = efficiency;
-  }
-}
+function downloadResults() {
+  var pdf = new jsPDF('p', 'pt', 'letter');
+  pdf.canvas.height = 72 * 11;
+  pdf.canvas.width = 72 * 8.5;
+
+  pdf.fromHTML(document.body);
+
+  pdf.save('report.pdf');
+};
+//var element = document.getElementById("downloadIcon");
+//element.addEventListener("click", downloadResults);
 
 
-var systemData = new SystemData();
-systemData.dc = 25;
-systemData.efficiency = 15;
-//calculationsRequest(systemData.dc, systemData.efficiency);
+
 
 getData();
 //getData("https://reqres.in/api/users");
 //postData("https://reqres.in/api/users", testObject);
 
+//var systemData = new SystemData(35.09, -118.09, 25, 15, 15, 10, 12);
+//createResultsRequest(systemData);
 

@@ -14,6 +14,10 @@
         <!-- Custom Stylesheet -->
         <link rel="stylesheet" type="text/css" href="assets/stylesheets/styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js'></script>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 
         
 
@@ -45,20 +49,119 @@
         <!-- Main Content -->
         <main>
             <h1>Results</h1>
-       
-           
+            <div class="icons">
+                <a onclick="window.print()" class="fa fa-print fa-lg" alt="Print symbol"></a> 
+                <a id="downloadIcon" class="fa fa-download fa-lg" alt="Download symbol"></a> 
+            </div>
+            
+            <!-- Esstimations -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Solar Radiation</th>
+                        <th>AC Energy Potential</th>
+                        <th>Value</th>
+                    </tr>
+                    <tbody>
+                        <tr>
+                            <th>43</th>
+                            <td>2.40</td>
+                            <td>6.93</td>
+                            <td>€ 72.09</td>
+                        </tr>
+                        <tr>
+                            <th>44</th>
+                            <td>2.45</td>
+                            <td>7.43</td>
+                            <td>€ 84.73</td>
+                        </tr>
+                        <tr>
+                            <th>45</th>
+                            <td>2.37</td>
+                            <td>4.53</td>
+                            <td>€ 41.14</td>
+                        </tr>
+                        <tr>
+                            <th>46</th>
+                            <td>2.38</td>
+                            <td>5.93</td>
+                            <td>€ 52.69</td>
+                        </tr>
+                        <tr>
+                            <th>TOTAL</th>
+                            <th>8.38</th>
+                            <th>23.93</th>
+                            <th>€ 232.75</th>
+                        </tr>
+                    </tbody>
+                </thead>
+            </table>
+            <br>
+            <!-- System data -->
+            <div id="left"> 
+                <table>
+                    <thead>
+                        <tr>
+                            <h2>System</h2>
+                        </tr>
+                        <tbody>
+                            <tr>
+                                <th>43</th>
+                                <td>2.40</td>
+                            </tr>
+                            <tr>
+                                <th>44</th>
+                                <td>2.45</td>
+                            </tr>
+                            <tr>
+                                <th>45</th>
+                                <td>2.37</td>
+                            </tr>
+                            <tr>
+                                <th>46</th>
+                                <td>2.38</td>
+                            </tr>
+                        </tbody>
+                    </thead>
+                </table>
+                <br>
+                <h2>Graphs</h2>
+                <img src="assets/images/chart_dummy.png" alt="Chart" style="width: 90%;" />
+            </div> 
+            
+            <div id="right"> 
 
+                <table>
+                    <thead>
+                        <tr>
+                            <h2>Location</h2>
+                        </tr>
 
-
-
-
+                        <tbody>
+                            <tr>
+                                <th>Latitude:</th>
+                                <td>35.09</td>
+                            </tr>
+                            <tr>
+                                <th>Longitude:</th>
+                                <td>-118.59</td>
+                            </tr>
+                        </tbody>
+                        
+                    </thead>
+                </table>
+                <br>
+                <img src="assets/images/map_dummy.JPG" alt="Map" style="width: 90%;" />
+            </div> 
         </main>
 
         <!-- Footer Section -->
-        <footer>
+        <footer >
             <p>Photovoltaic Potential Calculator - Velibor Cvjetinovic</p>
         </footer>
 
         <script src="assets/javascript/main.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
     </body>
 </html>
