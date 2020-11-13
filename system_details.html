@@ -23,7 +23,7 @@
 
     </head>
 
-    <body>
+    <body onload="loadDisplayName()">
        <!-- Navigation -->
        <nav class="top-nav fixed">
             <ul>
@@ -34,10 +34,13 @@
                     <a  class="active" href="system_details.html">System Details</a>
                 </li>
                 <li>
-                    <a href="calculations.html">Calculations</a>
+                    <a  href="results.html">Results</a>
+                </li> 
+                <li>
+                    <a  href="users.html">Users</a>
                 </li>
                 <li class="right">
-                    <a href="settings.html" class="fa fa-cog" ></a>
+                    <a id="displayName" href="settings.html" class="fa fa-cog" ></a>
                 </li> 
             </ul>
         </nav>
@@ -80,7 +83,7 @@
                     </div> 
                     
                     <div id="right-box"> 
-                        <div id="map"></div>
+                        <div id="map" alt="Map with plotted coordinates" ></div>
                         <script type="text/javascript">
                             var latitude = localStorage.getItem("latitude");
                             var longitude = localStorage.getItem("longitude");

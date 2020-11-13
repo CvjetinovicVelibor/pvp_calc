@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
+    <head >
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Simple Title</title>
+        <title>PVP Calculator</title>
 
         <!-- Normalize.css makes browsers render all elements more consistently 
              and in line with modern standards. It precisely targets only the styles
@@ -14,11 +14,14 @@
         <!-- Custom Stylesheet -->
         <link rel="stylesheet" type="text/css" href="assets/stylesheets/styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        
+
     </head>
 
     <body onload="loadDisplayName()">
         <!-- Navigation -->
-        <nav class="top-nav fixed">
+       <nav class="top-nav fixed">
             <ul>
                 <li>
                     <a href="index.html">Start</a>
@@ -30,7 +33,7 @@
                     <a  href="results.html">Results</a>
                 </li>
                 <li>
-                    <a  href="users.html" >Users</a>
+                    <a  class="active" href="users.html">Users</a>
                 </li>
                 <li class="right">
                     <a id="displayName" href="settings.html" class="fa fa-cog" ></a>
@@ -40,26 +43,34 @@
         </nav>
 
         <!-- Main Content -->
-        <main>
-            <div class="signin">
-                <h3 class="sign">Register</h3>
-                <form name="myform" method="post" onsubmit="validateform()" target="hiddenFrame" >
-                  <input id="username" name="username" type="text" placeholder="Username" required="required">
-                  <input id="password" name="password" type="password" placeholder="Password" required="required">
-                  <input id="email" type="email" placeholder="Email" required="required">
-                  <input id="age" type="number" min=18 max=130 step=1 placeholder="Age">
-                  <button type="submit" class="submit" onclick="" >Register</button>
-                </form>
-            </div>
+        <main >
+            <h1>Users</h1>
+       
+            <div id="left-box" > 
+                <div id="data_table"></div>
+               
+               
+            </div> 
+            <i class="fas fa-band-aid"></i>
+            <div id="right-box"> 
+                <h3 class="sign">Selected users:</h3>
+                
+                <div id="selected_profiles">
+                
+                </div>
+            </div> 
+
+
+
+
+
         </main>
-    
+
         <!-- Footer Section -->
         <footer>
             <p>Photovoltaic Potential Calculator - Velibor Cvjetinovic</p>
         </footer>
 
         <script src="assets/javascript/main.js"></script>
-        <iframe name="hiddenFrame" width="0" height="0" style="display: none;"></iframe>
     </body>
-    
 </html>

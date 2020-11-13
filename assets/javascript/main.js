@@ -3,16 +3,13 @@ var longitude;
 var dcSystemSize;
 
 
-let model = {
-  latitude: latitude,
-  longitude: longitude,
-  dcSystemSize: dcSystemSize
-}
+
+
+
+///////////////////////////// Coordinates /////////////////////////////////////////
 
 function saveCoordinates() {
   
-  // latitude = document.getElementById("latitude").value;
-  // longitude = document.getElementById("longitude").value;
   localStorage.setItem("latitude", document.getElementById("latitude").value);
   localStorage.setItem("longitude", document.getElementById("longitude").value);
   
@@ -38,8 +35,8 @@ function loadCoordinates() {
 
 ///////////////////////////// AJAX /////////////////////////////////////////
 
-function getData(url){
-  //var url = "https://reqres.in/api/users";
+function getData(){
+  var url = "https://reqres.in/api/users";
   fetch(url).then(response => {
     if(!response.ok){
       throw Error("Error occured while fetching data from "+url);
@@ -100,6 +97,19 @@ function postData(url, object){
 
 }
 
+function calculationsRequest(dc, efficiency){
+  url = "localhost:8080/example?";
+  if(dc != null && dc != ""){
+    url = url + "dc="+ dc + "&";
+  }
+  if(efficiency != null && efficiency != ""){
+    url = url + "efficiency="+ efficiency + "&";
+  }
+  console.log("Created request: "+url);
+  return url;
+}
+
+
 
 // Select profile
 function selectProfile(first_name, email, avatar){
@@ -137,24 +147,97 @@ function removeProfile(first_name){
 
 ////////////////// FORM //////////////////////////
 function validateUsername() {
-  console.log("OKkkkkKKKooo")
-  var name = document.forms["myForm"]["username"].value;
+  var name = document.getElementById("username").value;
   if (name == "") {
     alert("Userame must be filled out");
     return false;
   }
   if (name.length > 18) {
-    alert("Userame must not be longer then 18 characters");
+    alert("Userame must be shorter then 18 characters");
     return false;
   }
   if (name.length < 5) {
-    alert("Userame must not be shorter then 5 characters");
+    alert("Userame must be longer then 5 characters");
     return false;
   }
+  return true;
 } 
 
+function validatePassword() {
+  var password = document.getElementById("password").value;
+  if (password == "") {
+    alert("Password must be filled out");
+    return false;
+  }
+  if (password.length > 18) {
+    alert("Password must be shorter then 18 characters");
+    return false;
+  }
+  if (password.length < 8) {
+    alert("Password must be longer then 8 characters");
+    return false;
+  }
+  return true;
+} 
+
+function validateEmail() {
+  var email = document.getElementById("email").value;
+  if (email == "") {
+    alert("Email must be filled out");
+    return false;
+  }
+  if (email.length > 18) {
+    alert("Email must be shorter then 18 characters");
+    return false;
+  }
+  if (!email.substring(email.indexOf("@")).includes(".")) {
+    alert("Email must include a top level domain");
+    return false;
+  }
+  return true;
+} 
+
+function validateform(){  
+  if(validateUsername()){
+    if(validatePassword()){
+      if(validateEmail()){
+        sessionStorage.setItem("username", document.getElementById("username").value);
+        //window.name = document.getElementById("username").value;
+        updateDisplayName();
+        alert("Hi "+sessionStorage.getItem("username")+"! The registartion was successful.");
+      }
+    }
+  }
+}  
+
+function updateDisplayName(){ 
+  document.getElementById("displayName").innerHTML = " "+sessionStorage.getItem("username");
+  //document.getElementById("displayName").innerHTML = " "+window.name;
+}
+
+function loadDisplayName(){
+  if(sessionStorage.getItem("username") != null){
+    document.getElementById("displayName").innerHTML = " "+sessionStorage.getItem("username");
+    document.getElementById("username").value = sessionStorage.getItem("username");
+  }
+}
 
 
+class SystemData {
+  constructor(dc, efficiency) {
+    this.dc = dc;
+    this.efficiency = efficiency;
+  }
+}
 
-getData("https://reqres.in/api/users");
+
+var systemData = new SystemData();
+systemData.dc = 25;
+systemData.efficiency = 15;
+//calculationsRequest(systemData.dc, systemData.efficiency);
+
+getData();
+//getData("https://reqres.in/api/users");
 //postData("https://reqres.in/api/users", testObject);
+
+
